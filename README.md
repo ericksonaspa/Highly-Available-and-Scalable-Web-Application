@@ -285,17 +285,32 @@ Now, let's test the service you have configured for successful operation. First,
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/82858021-a521-4f2f-86cf-5b1dc61af107)
 
+2. Open a new tab in your web browser and paste the copied DNS name. You can see that web service is working as shown below. For the figure below, you can see that the web instance is running this web page.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/039074f0-77a1-41ff-aef9-86938a46b4b2)
 
+3. If you click the refresh button here, you can see that the host serving the web page has been replaced with an instance of another availability zone area as shown below. This is because routing algorithms in ALB target groups behave Round Robin by default.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/196f7371-81df-418e-b407-38bee8a52377)
 
+4. Now, let's test load to see whether Auto Scaling works well. On your EC2 instance, enter the commands shown below. We are going to set option -c with 4 workers and -v to enable verbose logging. After some time, the CPU Utilization has spiked past 30%.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/c83abddf-d361-4020-bed5-31bdf31fbd6f)
 
+Run this command multiple times, the idea is to apply a reasonable amount of stress in order to make this work. Press CTRL^C to back out and reapply an additional stress command as needed.
 
+5. Wait for about 5 minutes (300 seconds) and click the **Activity** tab to see the additional EC2 instances deployed according to the scaling policy.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/665cd963-2c69-4f35-9372-5f6b7937cd05)
 
+6. When you click on the **Instance management** tab, you can see that two additional instances have sprung up and a total of four are up and running.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/62be7cc4-178e-4cf5-b147-f3e4359391d1)
 
+7. If you use the ALB DNS that you copied earlier to access and refresh the web page, you can see that it is hosting the web page in two instances that were not there before.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/f22413db-5db6-4060-88f7-39a9da04533c)
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/231d0998-58e0-4b26-adf4-f42e4e7aad51)
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/ec08b4a6-1ce4-4090-a8a4-9bb8f7ab7289)
