@@ -1,6 +1,6 @@
 # HIGHLY AVAILABLE AND SCALABLE WEB APPLICATION
 
-We will build a highly available web application on two availability zones and will perform a stress test to scale from the desired to the maximum capacity. The following items are contained in this project.
+This project builds a highly available web application on two availability zones and will perform a stress test to scale the instances from the desired capacity to the maximum capacity. The following items are contained in this project.
 
 - Create your VPC (Subnets, NAT Gateway, AZs). 
 - Launch web server instances, set up the security group, and execute user data
