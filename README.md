@@ -1,4 +1,4 @@
-# Highly-Available-and-Scalable-Web-Application
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/382d0003-250b-4a5c-84f2-197cb30a9aa6)# Highly-Available-and-Scalable-Web-Application
 Highly Available and Scalable Web Application
 
 We will build a highly available web application on two availability zones and will perform a stress test to scale from the desired to the maximum capacity. Let's get started! 
@@ -55,9 +55,9 @@ Amazon Virtual Private Cloud (Amazon VPC) allows you to start AWS resources with
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/d396f0df-c7e9-4b02-bfce-47722438c066)
 
-6. Check default VPC and subnet. **Auto-assign public IP** is set to **Enable**. 
+6. Choose the VPC we created previously, and for the subnet, choose public subnet. **Auto-assign public IP** is set to **Enable**.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/47099bae-5b41-4481-9eff-94d7edb29f1a)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/0752cabd-9b64-48c7-91ef-cca3b113fcf4)
 
 7. Right below it, create Security groups to act as a network firewall. Security groups will specify the protocols and addresses you want to allow in your firewall policy. For the security group you are currently creating, this is the rule that applies to the EC2 that will be created. After entering **Project - Web Server** in **Security group name** and **Description**, select **Add Security group rule** and set **HTTP** to **Type**.
 
@@ -77,11 +77,11 @@ Select **my IP** for both **HTTP** and **SSH** traffic as the **Source type**.
 
 10. Click the **View Instances** button in the lower right-hand portion of the screen to view the list of EC2 instances. Once your instance has launched, you will see your Web Server as well as the Availability Zone the instance is in, and the publicly routable DNS name. Click the checkbox next to your web server to view details about this EC2 instance.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/3d2d29cd-a742-409c-bef1-1a31330aba84)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/61690c61-a0b8-413e-bb32-ff6808a6eff6)
 
 11. Wait for the instance to pass the Status Checks to finish loading. Open a new browser tab and browse the Web Server by entering the EC2 instance’s Public DNS name into the browser. The EC2 instance’s Public DNS name can be found in the console by reviewing the Public IPv4 DNS name line highlighted above. You should see a website that looks like the following.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/de7ef5a0-6a7d-471d-babf-b9a52b6b1766)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/d941cb58-dff2-487c-8664-9383d42d17bc)
 
 # Connect to your Linux instance using Session Manager
 
@@ -105,9 +105,9 @@ Session Manager is a fully managed AWS Systems Manager capability that lets you 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/897bd207-1a10-4bd7-9cde-69f0a0239ff0)
 
-5. Go back Amazon EC2 console. In the navigation pane, under **Instances**, choose **Instances**. Choose your EC2 instance from the list and click **Actions**. In the Actions menu, choose Security, Modify IAM role.
+5. Go back Amazon EC2 console. In the navigation pane, under **Instances**, choose **Instances**. Choose your EC2 instance from the list and click **Actions**. In the **Actions** menu, choose **Security**, **Modify IAM role**.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/eeeea30d-ee77-4c79-a37f-3e81057f8e1b)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/de60cdbf-1400-47e5-82c8-8090192a2b59)
 
 6. For **IAM** role, select the instance profile you created **SSMInstanceProfile**. Then click on **Update IAM role**. 
 
@@ -115,11 +115,11 @@ Session Manager is a fully managed AWS Systems Manager capability that lets you 
 
 7. In the EC2 instance console, select the instance you want to connect to, and then click the **Connect** button.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e599ddcd-2efd-453a-8fde-16f15becff74)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/87103f37-aa36-4594-a21e-5daefd2adef6)
 
-8. In the **Connect to instance** page, select **Session Manager**. Review the **Session Manager usage section** for advantages of using Session Manager. Choose Connect. A new session will be started in a new tab. After the session is started, you can run bash commands as you would through any other connection type.
+8. In the **Connect to instance** page, select **Session Manager**. Review the **Session Manager usage section** for advantages of using Session Manager. Choose **Connect**. A new session will be started in a new tab. After the session is started, you can run bash commands as you would through any other connection type.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/f8b0803c-d3dd-4898-a7e1-4d0f5e5ada84)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/4864422a-9646-4f97-bc7b-e00dbcb66699)
 
 # Create a custom AMI
 
@@ -127,15 +127,15 @@ In the AWS EC2 console, you can create an Custom AMI to meet your needs. This ca
 
 1. In the EC2 console, select the instance that we made earlier in this lab, and click **Actions > Image and templates > Create Image**.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/d48e2087-d1e8-4d4d-b401-0f563ed3690a)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/dda01918-220b-451e-8ab7-d4f78e7121cc)
 
-2. In the Create Image console, type as shown below and press Create image to create the custom image.
+2. In the **Create Image** console, type as shown below and press **Create image** to create the custom image.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/3023745a-9f8f-418c-95cf-1166b9ce949e)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8039640b-434a-4179-89c0-4717e1f88836)
 
 3. Verify in the console that the image creation request in completed. In the left navigation panel, Click the **AMIs** button located under **IMAGES**. You can see that the **Status** of the AMI that you just created. It will show either **Pending** or **Available**.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/b025cc5b-d7ba-4ed4-9235-4ced326efb39)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/6526827a-e234-42b9-9a86-c7e3960a0bf7)
 
 # Deploy auto scaling web service
 
@@ -149,7 +149,61 @@ We will deploy a web service that can automatically scale out/in under load and 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8227ed2d-9eb0-4a4b-9b08-16fee351a59d)
 
-3. Scrolling down a little bit, there is a section for selecting availability zones. First, Select our vpc created previously. For Availability Zones select the 2 public subnets that were created previously. This should be Public Subnet for ap-northeast-2a and Public Subnet C for ap-northeast-2c.
+3. Scrolling down a little bit, there is a section for selecting availability zones. First, Select our vpc created previously. For Availability Zones select the 2 public subnets that were created previously.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e814ec68-6017-410f-86a4-ce26fea31886)
+
+4. In the **Security groups** section, click the **Create new security group** hyperlink. Enter **Web-ALB-SG** as the security group name and check the VPC information. Click the **Add rule** button and select **HTTP** as the Type and **Anywhere-IPv4** as the Source. And create a security group.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/23e66399-8c44-4adc-937f-5b85325c53d2)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/5139d490-af3c-408e-a08a-70ba6ac2bbcd)
+
+5. Return to the load balancer page again, click the refresh button, and select the **Web-ALB-SG** you just created. Remove the default security group.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e856513d-666f-475e-b012-93ea417e1f4b)
+
+6. In Listeners and routing column, click **Create target** group. Put **Web-TG** for Target group name and check all settings same with the screen below. After that click **Next** button.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/7f04582b-6814-4936-afea-f3649f9d8397)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/34bd12b4-0cc7-4dfb-a7af-dc1f5e982dac)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/b2c172ea-c2bf-4b06-a46d-31e799dfbb8f)
+
+7. This is where we would register our instances. However, there are not instances to register at this moment. Click **Create target group**.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/20ce8102-047e-44fd-a89b-4b24255e8b3e)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8a069fb0-dc86-499f-a63f-ab02020cca54)
+
+8. Again, move into the Load balancers page, click refresh button and select **Web-TG**. And then Click **Create load balancer**.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e792391d-4c07-44cd-a2a5-428b7e609bd9)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/3bd1f4df-6cdb-440f-9a9e-5850ccdf800e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
