@@ -183,15 +183,107 @@ We will deploy a web service that can automatically scale out/in under load and 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/3bd1f4df-6cdb-440f-9a9e-5850ccdf800e)
 
+# Configure launch template
 
+Now that ALB has been created, it's time to place the instances behind the load balancer. To configure an Amazon EC2 instance to start with Auto Scaling Group, we will use the Launch Template to create an Auto Scaling group.
 
+1. From the left navigation panel of the EC2 console, select **Security Groups** under the **Network & Security** heading and click **Create Security Group** in the upper right corner.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/b551a393-f2ad-4f63-a78e-c62d30750ba7)
 
+2. Scroll down to modify the Inbound rules. First, select the **Add rule** button to add the Inbound rules, and select **HTTP** in the **Type**. For **Source**, type **ALB** in the search bar to search for the security group created earlier **Web-ALB-SG**. This will configure the security group to only receive HTTP traffic coming from ALB.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/9459e16d-11a8-4f80-8fca-5d07b0f80871)
 
+3. Leave outbound rules' default settings and click **Create Security Group** to create a new security group. This creates a security group that allows traffic only for HTTP connections (TCP 80) that enter the instance via ALB from the Internet.
 
+# Create launch template
 
+1. In the EC2 console, select **Launch Templates** from the left navigation panel. Then click **Create Launch Template**.
 
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/fe13da08-b989-4343-922c-bacc3900e7bf)
+
+2. Let's proceed with setting up the launch template step by step. First, set Launch template name and Template version description as shown below, and select **Checkbox** for **Provide guidance in Auto Scaling guidance**. Select this checkbox to enable the template you create to be utilized by Amazon EC2 Auto Scaling.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/ba0925cd-a60d-49e4-82dc-5a371b3db50b)
+
+3. Scroll down to set the launch template contents. In **Amazon Machine Image(AMI)**, set the AMI to **Web Server v1**, which was created in the previous EC2 lab. You can find it by typing **Web Server v1** in the search section, or you can scroll down to find it in the My AMI section. Next, select **t2.micro** for the instance type. We are not going to configure SSH access because this is only for Web service server. Therefore, we do not use key pairs.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/b8e0c3a2-78db-420f-b74a-27dab10f5474)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/1ca637ec-53dd-47f0-946e-e94852cb91ac)
+
+4. Leave the other parts as default. Let's take a look at the Network Settings section. First, in Networking platform select Virtual Private Cloud(VPC). In security group section, find and apply **ASG-Web-Inst-SG** created before.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/a7d94d35-591d-4010-b9df-54e4fe713da3)
+
+5. Follow the Storage's default values without any additional change. Go down and define the Instance tags. Click **Add tag** and **Name** for **Key** and **Web Instance** for **Value**. Select Resource types as **Instances and Volumes**.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/713f95c8-36cc-4517-b7e3-a58729998671)
+
+6. Finally, in the **Advanced details** tab, set the **IAM instance** profile to **SSMInstanceProfile**. Leave all other settings as default, and click the **Create launch template** button at the bottom right to create a launch template.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e347b9b0-0ecd-4b92-bfa5-9e0b8212c5d0)
+
+7. After checking the values set in Summary on the right, click **Create launch template** to create a template.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/174b26f1-eace-4fe7-8915-a523483cb7d0)
+
+# Set Auto Scaling Group
+
+1. Enter the EC2 console and select **Auto Scaling Groups** at the bottom of the left navigation panel. Then click the **Create Auto Scaling** group button to create an **Auto Scaling Group**.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/bcf8a71c-6d25-460b-917e-11f4c7214547)
+
+2. In **[Step 1: Choose launch template or configuration]**, specify the name of the Auto Scaling group. In this project, we will designate it as **Web-ASG**. Then select the launch template that you just created named **Web**. The default settings for the launch template will be displayed. Confirm and click the lower right **Next** button.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/02c27c4b-d454-4c3a-a0a8-63771efecfd7)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/1b2accf1-455c-4e50-a915-f29a5ae970dc)
+
+3. Set the network configuration with the Purging options and instance types as default. Choose **Project-Lab-vpc** for **VPC**, select **Private subnet 1** and **Private subnet 2** for **Subnets**. When the setup is completed, click the **Next** button.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8985c5c7-41ee-4bd4-87ae-05cac4bd3fe4)
+
+4. Next, proceed to set up load balancing. First, select Attach to an existing load balancer. Then in **Choose a target group for your load balancer**, select **Web-TG** created during in ALB creation. At the **Monitoring**, select Check box for **Enable group metrics collection within CloudWatch**. This allows CloudWatch to see the group metrics that can determine the status of Auto Scaling groups. Click the **Next** button at the bottom right.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/682cbc86-30b6-4333-a7fe-ee2434df3408)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/571ea1b0-9547-4523-95de-2b310c2e1174)
+
+5. In the step of Configure group size and scaling policies, set scaling policy for Auto Scaling Group. In the **Group size** column, specify **Desired capacity** and **Minimum capacity** as **2** and Maximum capacity as **4**. Keep the number of the instances to 2 as usual, and allow scaling of at least 2 and up to 4 depending on the policy.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/a64a5be0-2ee1-4bcf-9b09-0c29d85fb56e)
+
+6. In the Scaling policies section, select **Target tracking scaling** policy and type **30** in Target value. This is a scaling policy for adjusting the number of instances based on the CPU average utilization remaining at 30% overall. Leave all other settings as default and click the **Next** button in the lower right corner.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/c665d6d4-316d-4286-ab54-6b96148a433b)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/52f8cbf4-c6ec-4a12-9435-a203476d0488)
+
+7. We will not Add notifications. Click the **Next** button to move to the next step. In the Add tags step, we will simply assign name tag. Click **Add tag**, type **Name** in **Key**, **ASG-Web-Instance** in **Value**, and then click **Next**.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/891dda91-0980-4416-8411-8a56bc90a4c3)
+
+8. Now we are in the final stage of review. After checking the all settings, click the **Create Auto Scaling Group** button at the bottom right.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/a57a8cc9-0e22-4fdd-a8c8-e65da0c81aa7)
+
+9. The Auto Scaling group has been created. You can see the Auto Scaling group created in the Auto Scaling group console as shown below.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/896dd9af-6400-47a3-9ffe-7d5ae4e008a9)
+
+10. Instances created through the Auto Scaling group can also be viewed from the EC2 Instance menu. 
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e4c55019-666f-48ee-b99d-527249952428)
+
+# Check web service and test
+
+Now, let's test the service you have configured for successful operation. First, let's check whether you can access the website normally and whether the load balancer works, and then load the web server to see if Auto Scaling works.
+
+1. To access through the Application Load Balancer configured for the web service, click the **Load Balancers** menu in the EC2 console and select the **Web-ALB** you created earlier. Copy **DNS name** from the basic configuration.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/82858021-a521-4f2f-86cf-5b1dc61af107)
 
 
 
