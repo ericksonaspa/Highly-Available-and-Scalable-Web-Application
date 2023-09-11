@@ -1,10 +1,30 @@
-# Highly Available and Scalable Web Application
+# HIGHLY AVAILABLE AND SCALABLE WEB APPLICATION
 
-We will build a highly available web application on two availability zones and will perform a stress test to scale from the desired to the maximum capacity. Let's get started! 
+We will build a highly available web application on two availability zones and will perform a stress test to scale from the desired to the maximum capacity. The following items are contained in this project.
 
-# Create VPC
+- Create your VPC (Subnets, NAT Gateway, AZs). 
+- Launch web server instances, set up the security group, and execute user data
+- Create IAM policy and IAM role 
+- Attach the IAM role to an instance
+- Create a custom Amazon Machine Image (AMI)
+- Create an Application Load Balancer (ALB) its security group and target group
+- Create Auto Scaling Group security group
+- Configure a Launch Template with our custom Amazon Machine Image (AMI)
+- Configure an Auto Scaling Group
+- Test auto-scaling and change manual settings
+
+The order of this project is as follows.
+
+- Create a VPC
+- Launch a web server instance
+- Deploy auto scaling web service
+- Check web service and test
+
+## CREATE A VPC
 
 Amazon Virtual Private Cloud (Amazon VPC) allows you to start AWS resources with a user-defined virtual network. This virtual network, along with the benefits of using AWS's scalable infrastructure, is very similar to the existing network operating in the customer's own data center.
+
+### Create VPC through VPC Wizard
 
 1. On the AWS console, select **VPC** from the service menu. Open it in a new tab.
 
@@ -32,7 +52,11 @@ Amazon Virtual Private Cloud (Amazon VPC) allows you to start AWS resources with
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/894da9d3-4f0c-434e-a8a3-82e28a33687e)
 
-# Launch a Web Server Instance
+## LAUNCH A WEB SERVER INSTANCE
+
+Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale cloud computing easier for developers. Amazon EC2’s simple web service interface allows you to obtain and configure capacity with minimal friction. It provides you with complete control of your computing resources and lets you run on Amazon’s proven computing environment.
+
+### Launch instance and connect to web service
 
 1. First, let's create our Web Server instance. We will launch an Amazon Linux 2 instance, bootstrap Apache/PHP, and install a basic web page that will display information about our instance. Click on **EC2 Dashboard** near the top of the leftmost menu. And Click on **Launch instances**.
 
@@ -82,7 +106,7 @@ Select **my IP** for both **HTTP** and **SSH** traffic as the **Source type**.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/d941cb58-dff2-487c-8664-9383d42d17bc)
 
-# Connect to your Linux instance using Session Manager
+### Connect to your Linux instance using Session Manager
 
 Session Manager is a fully managed AWS Systems Manager capability that lets you manage your Amazon EC2 instances through an interactive one-click browser-based shell or through the AWS CLI. You can use Session Manager to start a session with an instance in your account. After the session is started, you can run bash commands as you would through any other connection type.
 
@@ -112,15 +136,17 @@ Session Manager is a fully managed AWS Systems Manager capability that lets you 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/edadc126-8e07-4935-8ad9-4bab24e233a4)
 
-7. In the EC2 instance console, select the instance you want to connect to, and then click the **Connect** button.
+### Access the web service
+
+1. In the EC2 instance console, select the instance you want to connect to, and then click the **Connect** button.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/87103f37-aa36-4594-a21e-5daefd2adef6)
 
-8. In the **Connect to instance** page, select **Session Manager**. Review the **Session Manager usage section** for advantages of using Session Manager. Choose **Connect**. A new session will be started in a new tab. After the session is started, you can run bash commands as you would through any other connection type.
+2. In the **Connect to instance** page, select **Session Manager**. Review the **Session Manager usage section** for advantages of using Session Manager. Choose **Connect**. A new session will be started in a new tab. After the session is started, you can run bash commands as you would through any other connection type.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/4864422a-9646-4f97-bc7b-e00dbcb66699)
 
-# Create a custom AMI
+### Create a custom AMI
 
 In the AWS EC2 console, you can create an Custom AMI to meet your needs. This can then be used for future EC2 instance creation. In this page, let's create an AMI using the web server instance that we built earlier.
 
@@ -132,19 +158,21 @@ In the AWS EC2 console, you can create an Custom AMI to meet your needs. This ca
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8039640b-434a-4179-89c0-4717e1f88836)
 
-3. Verify in the console that the image creation request in completed. In the left navigation panel, Click the **AMIs** button located under **IMAGES**. You can see that the **Status** of the AMI that you just created. It will show either **Pending** or **Available**.
+3. Verify in the console that the image creation request is completed. In the left navigation panel, Click the **AMIs** button located under **IMAGES**. You can see the **Status** of the AMI that you just created. It will show either **Pending** or **Available**.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/6526827a-e234-42b9-9a86-c7e3960a0bf7)
 
-# Deploy auto scaling web service
+## DEPLOY AUTO-SCALING WEB SERVICE
 
 We will deploy a web service that can automatically scale out/in under load and ensure high availability. We use the web server AMI created in the previous chapter and the network infrastructure named **Project-VPC-Lab**.
+
+### Configure Application Load Balancer
 
 1. From the **EC2 Management Console** in the left navigation panel, click **Load Balancers** under **Load Balancing**. Then click **Create Load Balancer**. In the Select load balancer type, click the **Create** button under **Application Load Balancer**.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/9907b3c4-c625-467c-8e47-249865ffb49d)
 
-2. Name the load balancer. In this case, name Name as **Web-ALB**. Leave the other settings at their default values.
+2. Name the load balancer. In this case, name is **Web-ALB**. Leave the other settings at their default values.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/8227ed2d-9eb0-4a4b-9b08-16fee351a59d)
 
@@ -170,7 +198,7 @@ We will deploy a web service that can automatically scale out/in under load and 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/b2c172ea-c2bf-4b06-a46d-31e799dfbb8f)
 
-7. This is where we would register our instances. However, there are not instances to register at this moment. Click **Create target group**.
+7. This is where we would register our instances. However, there are no instances to register at this moment. Click **Create target group**.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/20ce8102-047e-44fd-a89b-4b24255e8b3e)
 
@@ -182,7 +210,7 @@ We will deploy a web service that can automatically scale out/in under load and 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/3bd1f4df-6cdb-440f-9a9e-5850ccdf800e)
 
-# Configure launch template
+### Configure launch template
 
 Now that ALB has been created, it's time to place the instances behind the load balancer. To configure an Amazon EC2 instance to start with Auto Scaling Group, we will use the Launch Template to create an Auto Scaling group.
 
@@ -196,7 +224,7 @@ Now that ALB has been created, it's time to place the instances behind the load 
 
 3. Leave outbound rules' default settings and click **Create Security Group** to create a new security group. This creates a security group that allows traffic only for HTTP connections (TCP 80) that enter the instance via ALB from the Internet.
 
-# Create launch template
+### Create a launch template
 
 1. In the EC2 console, select **Launch Templates** from the left navigation panel. Then click **Create Launch Template**.
 
@@ -212,7 +240,7 @@ Now that ALB has been created, it's time to place the instances behind the load 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/1ca637ec-53dd-47f0-946e-e94852cb91ac)
 
-4. Leave the other parts as default. Let's take a look at the Network Settings section. First, in Networking platform select Virtual Private Cloud(VPC). In security group section, find and apply **ASG-Web-Inst-SG** created before.
+4. Leave the other parts as default. Let's take a look at the Network Settings section. First, in Networking platform select Virtual Private Cloud(VPC). In the security group section, find and apply **ASG-Web-Inst-SG** created before.
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/a7d94d35-591d-4010-b9df-54e4fe713da3)
 
@@ -228,7 +256,7 @@ Now that ALB has been created, it's time to place the instances behind the load 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/174b26f1-eace-4fe7-8915-a523483cb7d0)
 
-# Set Auto Scaling Group
+### Set Auto Scaling Group
 
 1. Enter the EC2 console and select **Auto Scaling Groups** at the bottom of the left navigation panel. Then click the **Create Auto Scaling** group button to create an **Auto Scaling Group**.
 
@@ -276,9 +304,11 @@ Now that ALB has been created, it's time to place the instances behind the load 
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/e4c55019-666f-48ee-b99d-527249952428)
 
-# Check web service and test
+## CHECK WEB SERVICE AND TEST
 
 Now, let's test the service you have configured for successful operation. First, let's check whether you can access the website normally and whether the load balancer works, and then load the web server to see if Auto Scaling works.
+
+### Check web service and load balancer
 
 1. To access through the Application Load Balancer configured for the web service, click the **Load Balancers** menu in the EC2 console and select the **Web-ALB** you created earlier. Copy **DNS name** from the basic configuration.
 
