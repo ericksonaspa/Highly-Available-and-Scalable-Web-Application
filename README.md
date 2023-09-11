@@ -13,6 +13,10 @@ We will build a highly available web application on two availability zones and w
 - Configure an Auto Scaling Group
 - Test auto-scaling and change manual settings
 
+The final architecture plans to be built through this project is as follows.
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/0a8948f6-cb52-4b62-a7ba-e90417b6d0e7)
+
 The order of this project is as follows.
 
 - Create a VPC
