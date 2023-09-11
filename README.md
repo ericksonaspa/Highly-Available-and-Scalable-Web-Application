@@ -1,5 +1,4 @@
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/382d0003-250b-4a5c-84f2-197cb30a9aa6)# Highly-Available-and-Scalable-Web-Application
-Highly Available and Scalable Web Application
+# Highly Available and Scalable Web Application
 
 We will build a highly available web application on two availability zones and will perform a stress test to scale from the desired to the maximum capacity. Let's get started! 
 
@@ -314,3 +313,5 @@ Run this command multiple times, the idea is to apply a reasonable amount of str
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/231d0998-58e0-4b26-adf4-f42e4e7aad51)
 
 ![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/ec08b4a6-1ce4-4090-a8a4-9bb8f7ab7289)
+
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/4a4a6846-0810-4fc3-a588-3cfeadf33cbd)
