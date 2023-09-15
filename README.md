@@ -15,7 +15,7 @@ This project builds a highly available web application on two availability zones
 
 The final architecture plans to be built through this project is as follows.
 
-![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/0a8948f6-cb52-4b62-a7ba-e90417b6d0e7)
+![image](https://github.com/ericksonaspa/Highly-Available-and-Scalable-Web-Application/assets/77118362/2aa2869a-1e43-494e-b4d1-6fbe8644e8f8)
 
 The order of this project is as follows.
 
